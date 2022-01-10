@@ -5,7 +5,7 @@
   <target name="jar" depends="compile" description="Creates the jar file">
     <mkdir dir="build/classes/META-INF/services"/>
     <copy todir="build/classes/META-INF/services" file="conf/java.nio.charset.spi.CharsetProvider"/>
-    <antcall target="zimbra-jar">
+    <antcall target="zextras-jar">
        <param name="implementation.title" value="Zimbra Charset"/>
     </antcall>
   </target>
@@ -24,8 +24,8 @@
   <target name="undeploy">
     <ant dir="${server.dir}" target="stop-webserver" inheritAll="false"/>
     <delete>
-      <fileset dir="${common.jars.dir}" includes="zm-charset*.jar,zimbra-charset.jar"/>
-      <fileset dir="${jetty.endorsed.jars.dir}" includes="zm-charset*.jar,zimbra-charset.jar"/>
+      <fileset dir="${common.jars.dir}" includes="zm-charset*.jar,zextras-charset.jar"/>
+      <fileset dir="${jetty.endorsed.jars.dir}" includes="zm-charset*.jar,zextras-charset.jar"/>
 	</delete>
     <ant dir="${server.dir}" target="start-webserver" inheritAll="false"/>
   </target>
