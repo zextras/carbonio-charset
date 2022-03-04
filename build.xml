@@ -1,33 +1,47 @@
-<project name="zm-charset" default="jar">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:antcontrib="antlib:net.sf.antcontrib" name="zm-charset" default="jar">
 
-  <import file="../zm-zcs/ant-global.xml"/>
-  
+  <import file="./build-common.xml" />
+
+  <target name="publish-local-all" depends="init-ivy-cache">
+    <ant dir="./" target="publish-local" inheritAll="true" />
+    <echo>Publishing jar in local cache</echo>
+  </target>
+
+  <target name="publish-maven-all" depends="publish-local-all">
+    <ant dir="./" target="publish-maven" inheritAll="true" />
+    <echo>Publish artifacts on public maven</echo>
+  </target>
+
+  <target name="init-ivy-cache">
+    <mkdir dir="${user.home}/.ivy2/cache" />
+  </target>
+
   <target name="jar" depends="compile" description="Creates the jar file">
-    <mkdir dir="build/classes/META-INF/services"/>
-    <copy todir="build/classes/META-INF/services" file="conf/java.nio.charset.spi.CharsetProvider"/>
+    <mkdir dir="build/classes/META-INF/services" />
+    <copy todir="build/classes/META-INF/services" file="conf/java.nio.charset.spi.CharsetProvider" />
     <antcall target="zextras-jar">
-       <param name="implementation.title" value="Zimbra Charset"/>
+      <param name="implementation.title" value="Zimbra Charset" />
     </antcall>
   </target>
 
   <target name="deploy" depends="jar,set-dev-version">
-    <ant dir="${server.dir}" target="stop-webserver" inheritAll="false"/>
+    <ant dir="${server.dir}" target="stop-webserver" inheritAll="false" />
     <copy todir="${common.jars.dir}">
       <fileset dir="${build.dir}" includes="${jar.file}" />
     </copy>
     <copy todir="${jetty.endorsed.jars.dir}">
       <fileset dir="${build.dir}" includes="${jar.file}" />
     </copy>
-    <ant dir="${server.dir}" target="start-webserver" inheritAll="false"/>
+    <ant dir="${server.dir}" target="start-webserver" inheritAll="false" />
   </target>
 
   <target name="undeploy">
-    <ant dir="${server.dir}" target="stop-webserver" inheritAll="false"/>
+    <ant dir="${server.dir}" target="stop-webserver" inheritAll="false" />
     <delete>
-      <fileset dir="${common.jars.dir}" includes="zm-charset*.jar,zextras-charset.jar"/>
-      <fileset dir="${jetty.endorsed.jars.dir}" includes="zm-charset*.jar,zextras-charset.jar"/>
-	</delete>
-    <ant dir="${server.dir}" target="start-webserver" inheritAll="false"/>
+      <fileset dir="${common.jars.dir}" includes="zm-charset*.jar,zextras-charset.jar" />
+      <fileset dir="${jetty.endorsed.jars.dir}" includes="zm-charset*.jar,zextras-charset.jar" />
+    </delete>
+    <ant dir="${server.dir}" target="start-webserver" inheritAll="false" />
   </target>
 
 </project>
