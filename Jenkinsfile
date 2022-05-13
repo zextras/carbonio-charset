@@ -27,7 +27,7 @@ pipeline {
                         cat <<EOF > build.properties
                         debug=0
                         is-production=1
-                        carbonio.buildinfo.version=22.3.0_ZEXTRAS_202203
+                        carbonio.buildinfo.version=22.5.0_ZEXTRAS_202205
                         EOF
                        '''
                     sh "cat ${CREDENTIALS} | sed -E 's#\\\\#\\\\\\\\#g' >> build.properties"
@@ -50,7 +50,7 @@ pipeline {
                         cat <<EOF > build.properties
                         debug=0
                         is-production=1
-                        carbonio.buildinfo.version=22.3.0_ZEXTRAS_202203
+                        carbonio.buildinfo.version=22.5.0_ZEXTRAS_202205
                         EOF
                        '''
                     sh "cat ${CREDENTIALS} | sed -E 's#\\\\#\\\\\\\\#g' >> build.properties"
