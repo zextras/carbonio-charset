@@ -11,4 +11,4 @@ Carbonio charset provider based on the nio CharsetProvider class.
 
 ## License
 
-See [COPYING](COPYING) file for details
+See [COPYING](COPYING-AGPL-3.0-only) file for details
