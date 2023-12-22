@@ -1,7 +1,7 @@
 # Carbonio Charset
 
 ![Contributors](https://img.shields.io/github/contributors/zextras/carbonio-charset "Contributors")
-![Activity](https://img.shields.io/github/commit-activity/m/zextras/carbonio-charset "Activity") ![License](https://img.shields.io/badge/license-AGPL%203-green
+![Activity](https://img.shields.io/github/commit-activity/m/zextras/carbonio-charset "Activity") ![License](https://img.shields.io/badge/license-GPL%202-green
 "License")
 ![Project](https://img.shields.io/badge/project-carbonio-informational
 "Project")
@@ -11,4 +11,4 @@ Carbonio charset provider based on the nio CharsetProvider class.
 
 ## License
 
-See [COPYING](COPYING-AGPL-3.0-only) file for details
+See [COPYING](COPYING) file for details
