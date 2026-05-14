@@ -1,3 +1,14 @@
+library(
+    identifier: 'jenkins-lib-common@1.7.5',
+    retriever: modernSCM([
+        $class: 'GitSCMSource',
+        credentialsId: 'jenkins-integration-with-github-account',
+        remote: 'git@github.com:zextras/jenkins-lib-common.git',
+    ])
+)
+
+properties(defaultPipelineProperties())
+
 pipeline {
     agent {
         node {
@@ -18,6 +29,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                gitMetadata()
+            }
+        }
+        stage('Bump version') {
+            steps {
+                script {
+                    dt2_semanticRelease()
+                }
             }
         }
         stage('Build') {
@@ -64,4 +83,3 @@ pipeline {
         }
     }
 }
-
