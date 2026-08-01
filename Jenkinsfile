@@ -1,5 +1,5 @@
 library(
-    identifier: 'jenkins-lib-common@v2.11.3',
+    identifier: 'jenkins-lib-common@v4.3.2',
     retriever: modernSCM([
         $class: 'GitSCMSource',
         credentialsId: 'jenkins-integration-with-github-account',
@@ -49,7 +49,7 @@ pipeline {
             }
             steps {
                 script {
-                    semanticRelease(github: true)
+                    semanticRelease()
                 }
             }
         }
