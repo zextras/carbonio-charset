@@ -28,7 +28,7 @@
 
   <target name="download-ivy" description="Install ivy" unless="ivy.installed" depends="test.if.ivy.available">
     <mkdir dir="${ivy.jar.dir}" />
-    <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true" />
+    <get src="https://repo.zextras.tools/repository/java-sdk/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true" />
   </target>
 
   <target name="init-ivy" depends="download-ivy">
@@ -596,7 +596,7 @@
       <mapping conf="runtime" scope="runtime" />
       <mapping conf="*" scope="compile" />
     </ivy:makepom>
-    <ivy:publish settingsRef="dev.settings" pubrevision="${dev.version}" resolver="public-maven" overwrite="true">
+    <ivy:publish settingsRef="dev.settings" pubrevision="${dev.version}" resolver="nexus-publish" overwrite="true">
       <artifact name="${ant.project.name}" type="pom" ext="pom" />
     </ivy:publish>
   </target>
