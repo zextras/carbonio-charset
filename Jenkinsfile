@@ -1,5 +1,5 @@
 library(
-    identifier: 'jenkins-lib-common@v4.15.2',
+    identifier: 'jenkins-lib-common@v5.0.8',
     retriever: modernSCM([
         $class: 'GitSCMSource',
         credentialsId: 'jenkins-integration-with-github-account',
@@ -55,10 +55,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'artifactory-jenkins-gradle-properties-splitted', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
-                    container('jdk-21') {
-                        sh 'ant -propertyfile build.properties -Dartifactory_user="${ARTIFACTORY_USER}" -Dartifactory_password="${ARTIFACTORY_PASSWORD}" jar'
-                    }
+                container('jdk-21') {
+                    sh 'ant -propertyfile build.properties jar'
                 }
             }
         }
@@ -67,9 +65,9 @@ pipeline {
                 buildingTag()
             }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'jenkins-artifactory-account', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'nexus-prod-jenkins-ci-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
                     container('jdk-21') {
-                        sh 'ant -propertyfile build.properties -Dartifactory_user="${ARTIFACTORY_USER}" -Dartifactory_password="${ARTIFACTORY_PASSWORD}" publish-maven-all'
+                        sh 'ant -propertyfile build.properties -Dnexus_user="${NEXUS_USER}" -Dnexus_password="${NEXUS_PASSWORD}" publish-maven-all'
                     }
                 }
             }

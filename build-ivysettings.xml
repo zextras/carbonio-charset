@@ -11,7 +11,7 @@
   <property name="build.tmp.dir" value="${build.dir}/tmp" />
   <property name="dist.dir" value="${build.dir}/dist" />
 
-  <credentials host="zextras.jfrog.io" realm="Artifactory Realm" username="${artifactory_user}" passwd="${artifactory_password}" />
+  <credentials host="repo.zextras.tools" realm="Sonatype Nexus Repository Manager" username="${nexus_user}" passwd="${nexus_password}" />
 
   <settings defaultResolver="chain-resolver" />
   <caches defaultCacheDir="${dev.home}/.ivy2/cache" />
@@ -23,24 +23,16 @@
         <artifact pattern="${dev.home}/.zcs-deps/[organisation].[ext]" />
 
       </filesystem>
-      <url name="maven-https-org">
-        <artifact pattern="https://repo1.maven.org/maven2/[organization]/[module]/[revision]/[artifact]-[revision].[ext]" />
-      </url>
-      <url name="maven-https-orgPath">
-        <artifact pattern="https://repo1.maven.org/maven2/[orgPath]/[module]/[revision]/[artifact]-[revision].[ext]" />
-      </url>
-      <ibiblio name="public-maven" m2compatible="true" root="https://zextras.jfrog.io/artifactory/public-maven-repo" />
-      <ibiblio name="maven-redhat" root="https://maven.repository.redhat.com/ga/" pattern="[organisation]/[module]/[revision]/[module]-[revision].[ext]" />
-      <url name="liferay-https-orgPath">
-        <artifact pattern="https://repository.liferay.com/nexus/content/repositories/public/[orgPath]/[module]/[revision]/[artifact]-[revision].[ext]" />
-      </url>
+      <ibiblio name="public-maven" m2compatible="true" root="https://repo.zextras.tools/repository/java-sdk/" />
       <url name="zextras">
-        <artifact pattern="https://zextras.jfrog.io/artifactory/public-maven-repo/[organisation]/[module]/[module]-[revision].[ext]" />
-        <artifact pattern="https://zextras.jfrog.io/artifactory/public-maven-repo/[organisation]-[revision].[ext]" />
-        <artifact pattern="https://zextras.jfrog.io/artifactory/public-maven-repo/[organisation].[ext]" />
-        <artifact pattern="https://zextras.jfrog.io/artifactory/public-maven-repo/[orgPath]/[module]/[baseRev](-[folderItegRev])/[module]-[baseRev](-[fileItegRev])(-[classifier]).[ext]" />
+        <artifact pattern="https://repo.zextras.tools/repository/java-sdk/[organisation]/[module]/[module]-[revision].[ext]" />
+        <artifact pattern="https://repo.zextras.tools/repository/java-sdk/[organisation]-[revision].[ext]" />
+        <artifact pattern="https://repo.zextras.tools/repository/java-sdk/[organisation].[ext]" />
+        <artifact pattern="https://repo.zextras.tools/repository/java-sdk/[orgPath]/[module]/[baseRev](-[folderItegRev])/[module]-[baseRev](-[fileItegRev])(-[classifier]).[ext]" />
       </url>
     </chain>
+    <!-- 'nexus-publish' resolver is not part of the chain: java-sdk is a read-only group, deploys go to the hosted repo -->
+    <ibiblio name="nexus-publish" m2compatible="true" root="https://repo.zextras.tools/repository/public-maven-repo/" />
     <!-- 'build-tmp' resolver is not part of the chain and is used only for packaging war files -->
     <filesystem name="build-tmp">
       <artifact pattern="${build.tmp.dir}/[module]-[revision].[ext]" />
@@ -49,7 +41,4 @@
       <artifact pattern="${dist.dir}/[module]-[revision].[ext]" />
     </filesystem>
   </resolvers>
-  <modules>
-    <module organisation="xerces" name="xercesImpl" revision="2.9.1-patch-01" resolver="maven-redhat" />
-  </modules>
 </ivysettings>
